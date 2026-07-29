@@ -9,6 +9,7 @@ st.set_page_config(
 
 st.title("📊 Smart Data Analyst")
 
+
 uploaded_file = st.file_uploader(
     "Upload your CSV file",
     type=["csv"]
