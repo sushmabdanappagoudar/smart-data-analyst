@@ -1,69 +1,53 @@
 import streamlit as st
 import pandas as pd
 
-# ------------------------------
-# Page Configuration
-# ------------------------------
 st.set_page_config(
     page_title="Smart Data Analyst",
     page_icon="📊",
     layout="wide"
 )
 
-# ------------------------------
-# Title
-# ------------------------------
 st.title("📊 Smart Data Analyst")
 st.write("Upload a CSV file to analyze your data.")
-
 
 uploaded_file = st.file_uploader(
     "Choose a CSV file",
     type=["csv"]
 )
 
-# ------------------------------
-# If a file is uploaded
-# ------------------------------
 if uploaded_file is not None:
 
     df = pd.read_csv(uploaded_file)
 
     st.success("✅ Dataset uploaded successfully!")
 
-    # Preview
     st.header("📋 Dataset Preview")
     st.dataframe(df.head())
 
-    # Shape
-    st.header("📊 Dataset Shape")
+    st.header("📊 Dataset Overview")
 
-    col1, col2 = st.columns(2)
+    c1, c2, c3 = st.columns(3)
 
-    with col1:
-        st.metric("Rows", df.shape[0])
+    c1.metric("Rows", df.shape[0])
+    c2.metric("Columns", df.shape[1])
+    c3.metric("Missing Values", int(df.isnull().sum().sum()))
 
-    with col2:
-        st.metric("Columns", df.shape[1])
+    c4, c5 = st.columns(2)
 
-    # Columns
+    c4.metric("Duplicate Rows", int(df.duplicated().sum()))
+
+    memory = df.memory_usage(deep=True).sum() / 1024
+    c5.metric("Memory (KB)", f"{memory:.2f}")
+
     st.header("📌 Column Names")
     st.write(df.columns.tolist())
 
-    # Data Types
     st.header("🧾 Data Types")
     st.dataframe(df.dtypes.astype(str))
 
-    # Missing Values
     st.header("⚠ Missing Values")
-    st.dataframe(df.isnull().sum())
+    st.dataframe(df.isnull().sum().rename("Missing Values"))
 
-<<<<<<< HEAD
-    st.subheader("Statistical Summary")
-
-    st.dataframe(df.describe())
-=======
-    # Statistics
     st.header("📈 Statistical Summary")
     st.dataframe(df.describe(include="all"))
->>>>>>> fb377df (Fix folder structure)
+    
