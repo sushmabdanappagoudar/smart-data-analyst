@@ -1,0 +1,23 @@
+assets/
+    .gitkeep
+
+data/
+    .gitkeep
+
+models/
+    .gitkeep
+
+notebooks/
+    .gitkeep
+
+reports/
+    .gitkeep
+
+sample_data/
+    .gitkeep
+
+screenshots/
+    .gitkeep
+
+utils/
+    .gitkeep
